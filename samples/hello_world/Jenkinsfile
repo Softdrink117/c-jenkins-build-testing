@@ -3,8 +3,10 @@ pipeline {
     agent {label 'C'}
     stages {
         stage('build') {
-            echo 'Jenkins: Building...'
-            sh 'make'
+            steps {
+                echo 'Jenkins: Building...'
+                sh 'make'
+            }
         }
     }
     post {
