@@ -7,6 +7,7 @@ pipeline {
                 echo 'Jenkins: Building...'
                 dir("samples/hello_world") {
                     sh 'make'
+                    archiveArtifacts artifacts: '**/bin/*', fingerprint: true
                 }
             }
         }
@@ -16,6 +17,17 @@ pipeline {
                 dir("samples/hello_world") {
                     sh 'make run'
                 }
+            }
+        }
+        stage('deploy') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                echo 'Jenkins: Deploy...'
+                echo 'Deploy test stub'
             }
         }
     }
