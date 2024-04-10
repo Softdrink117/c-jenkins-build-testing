@@ -4,7 +4,7 @@ BINDIR		:= bin
 BUILDDIR	:= build
 
 # Setup sources
-SRCS 	+= $(wildcard $(SRCDIR)/*.c)
+SRCS 	:= $(wildcard $(SRCDIR)/*.c)
 
 # Output files
 NAME	:= hello_world
@@ -18,7 +18,7 @@ CFLAGS	:= -g -Wall -O2
 LIB		:=
 
 # Object files
-OBS		:= $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCS))
+OBJS		:= $(patsubst %.c, $(BUILDDIR)/%.o, $(SRCS))
 
 # Generate header dependencies so we can include them in subsequent builds.
 DEPDIR := $(BUILDDIR)
@@ -27,16 +27,38 @@ DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 # Handle automatic rebuild of c files when headers change (generated in c rules below).
 -include $(OBJS:.o=.d)
 
-all: $(BIN)
+# Print each entry on a new line
+# These defines are important for proper functioning of newlineprint
+NULL	:=
+SPACE	:= $(NULL) $(NULL)
+define NEWLINE
+
+
+endef
+# Function that can be $(call)ed to print each value on a new line
+newlineprint	= $(NEWLINE)$(subst $(SPACE),$(NEWLINE),$(1))
+
+all: core
+
+core: $(BIN)
 	@echo
 	@echo Built $(BIN)
 	@echo
 
 run: $(BIN)
+	@echo 
+	@echo Running $(BIN) ...
 	$(BIN)
+
+# Create the BINDIR and BUILDDIR directories if they do not exist
+$(BUILDDIR) $(BINDIR):
+	@mkdir $@
 
 # Link objects into BIN
 $(BIN): $(OBJS) | $(BINDIR)
+	$(info All sources:			$(call newlineprint,$(SRCS)))
+	$(info All objects:   		$(call newlineprint,$(OBJS)))
+	@mkdir -p $(dir $@)
 	$(CC) $(LDFLAGS) $^ $(LIB) -o $@
 
 # Build object files
