@@ -10,6 +10,14 @@ pipeline {
                 }
             }
         }
+        stage('test') {
+            steps {
+                echo 'Jenkins: Testing...'
+                dir("samples/hello_world") {
+                    sh 'make run'
+                }
+            }
+        }
     }
     post {
         always {
