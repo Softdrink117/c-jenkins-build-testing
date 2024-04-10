@@ -1,0 +1,15 @@
+#!groovy
+pipeline {
+    agent {label 'C'}
+    stages {
+        stage('build') {
+            echo 'Jenkins: Building...'
+            sh 'make'
+        }
+    }
+    post {
+        always {
+            echo 'Jenkins: Pipeline finished.'
+        }
+    }
+}

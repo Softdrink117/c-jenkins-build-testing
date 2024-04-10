@@ -1,5 +1,11 @@
 # Adapted from https://github.com/github/gitignore/blob/main/C.gitignore
 
+# SSH Key files
+**/keys
+
+# Generated .env files
+**/.env
+
 # Build artifacts
 **/bin
 **/build

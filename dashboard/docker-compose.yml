@@ -1,0 +1,34 @@
+# Adapted from https://github.com/bitnami/containers/blob/main/bitnami/jenkins/docker-compose.yml
+
+services:
+  jenkins:
+    container_name: Jenkins-Dashboard
+    image: docker.io/bitnami/jenkins:2
+    ports:
+      - '80:8080'
+    networks:
+      - jenkins-network
+    environment:
+      - JENKINS_USERNAME=admin
+      - JENKINS_PASSWORD=bitnami
+    volumes:
+      - 'jenkins_data:/bitnami/jenkins'
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1000M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+volumes:
+  jenkins_data:
+    driver: local
+
+networks:
+  jenkins-network:
+    driver: bridge
+    name: jenkins_network
