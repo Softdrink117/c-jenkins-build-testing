@@ -5,7 +5,9 @@ pipeline {
         stage('build') {
             steps {
                 echo 'Jenkins: Building...'
-                sh 'make'
+                dir("samples/hello_world") {
+                    sh 'make'
+                }
             }
         }
     }
