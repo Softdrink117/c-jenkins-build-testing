@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo 'Jenkins: Archiving...'
                 archiveArtifacts artifacts: '**/bin/*', 
-                    allowEmptyArchives: true,
+                    allowEmptyArchive: true,
                     fingerprint: true
             }
         }
