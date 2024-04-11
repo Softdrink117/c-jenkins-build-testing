@@ -1,17 +1,18 @@
 #!groovy
 pipeline {
     agent {label 'C'}
+    
     stages {
-        stage('setup') {
-            steps {
-                echo 'Jenkins: Installing prerequisites...'
-                dir("tools")
-                {
-                    sh 'chmod +x install_sdl.sh'
-                    sh './install_sdl.sh'
-                }
-            }
-        }
+        // stage('setup') {
+        //     steps {
+        //         echo 'Jenkins: Installing prerequisites...'
+        //         dir("tools")
+        //         {
+        //             sh 'chmod +x install_sdl.sh'
+        //             sh './install_sdl.sh'
+        //         }
+        //     }
+        // }
         stage('build') {
             steps {
                 echo 'Jenkins: Building...'
