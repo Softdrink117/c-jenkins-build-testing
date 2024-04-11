@@ -13,7 +13,14 @@ pipeline {
                     sh 'make'
                     echo 'SDL build finished'
                 }
-                archiveArtifacts artifacts: '**/bin/*', fingerprint: true
+            }
+        }
+        stage('archive') {
+            steps {
+                echo 'Jenkins: Archiving...'
+                archiveArtifacts artifacts: '**/bin/*', 
+                    allowEmptyArchives: true,
+                    fingerprint: true
             }
         }
         stage('test') {
