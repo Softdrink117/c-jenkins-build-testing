@@ -4,7 +4,7 @@
 SDL_Window *w;
 SDL_Surface *surf;
 
-int _init()
+int hello_init()
 {
     if(SDL_Init(SDL_INIT_VIDEO) >= 0)
     {
@@ -22,7 +22,7 @@ int _init()
     return 1;
 }
 
-void _dispose()
+void hello_dispose()
 {
     if(surf)
         SDL_FreeSurface(surf);
@@ -46,15 +46,15 @@ void loop()
 
 int main()
 {
-    if(!_init)
+    if(!hello_init())
     {
-        _dispose();
+        hello_dispose();
         return -1;
     }
 
     loop();    
     
     // printf("Hello World!\n");
-    _dispose();
+    hello_dispose();
     return 0;
 }
