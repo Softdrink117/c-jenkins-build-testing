@@ -3,7 +3,7 @@
 services:
   jenkins:
     container_name: Jenkins-Dashboard
-    image: docker.io/bitnami/jenkins:2
+    image: docker.io/bitnami/jenkins:latest
     ports:
       - '80:8080'
     networks:
@@ -11,8 +11,13 @@ services:
     environment:
       - JENKINS_USERNAME=admin
       - JENKINS_PASSWORD=bitnami
+      # - 'DOCKER_HOST=tcp://Jenkins-Docker-Host:2376'
+      # - 'DOCKER_CERT_PATH=/certs/client'
+      # - 'DOCKER_TLS_VERIFY=1'
     volumes:
       - 'jenkins_data:/bitnami/jenkins'
+      # - 'jenkins_socket:/var/run'
+      # - 'jenkins_certs:/certs:ro'
     deploy:
       resources:
         limits:
@@ -27,6 +32,12 @@ services:
 volumes:
   jenkins_data:
     driver: local
+  # jenkins_certs:
+  #   name: jenkins-certs
+  #   driver: local
+  # jenkins_socket:
+  #   name: jenkins-socket
+  #   driver: local
 
 networks:
   jenkins-network:

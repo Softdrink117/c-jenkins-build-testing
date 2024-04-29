@@ -1,0 +1,24 @@
+services:
+  docker-host:
+    container_name: Jenkins-Docker-Host
+    image: docker:dind
+    privileged: true
+    networks:
+      - jenkins-network
+    expose:
+      - "2375"
+      - "2376"
+      - "4243"
+      - "32768-60999"
+    volumes:
+      - 'jenkins_socket:/var/run'
+
+volumes:
+  jenkins_socket:
+    name: jenkins-socket
+    external: true
+
+networks:
+  jenkins-network:
+    name: jenkins_network
+    external: true
